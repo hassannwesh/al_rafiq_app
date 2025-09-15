@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppThemes {
   /// Light Theme
   static final ThemeData lightTheme = ThemeData(
+    fontFamily: 'Amiri',
     brightness: Brightness.light,
     primaryColor: const Color(0xFF145A32), // الأخضر الداكن
     scaffoldBackgroundColor: Colors.white, // الخلفية بيضاء
@@ -14,24 +15,29 @@ class AppThemes {
       onSecondary: Colors.black,
       onSurface: Colors.black,
     ),
+
     appBarTheme: const AppBarTheme(
+      iconTheme: IconThemeData(
+        size: 32,
+        color: Colors.white,
+      ), // للأيقونات اللي جوه الـ AppBar
       backgroundColor: Color(0xFF145A32),
       foregroundColor: Colors.white,
       elevation: 0,
       centerTitle: true,
     ),
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: Color(0xFF212121)), // نص أساسي
-      bodyMedium: TextStyle(color: Color(0xFF616161)), // نص ثانوي
+      bodyLarge: TextStyle(color: Colors.white), // نص أساسي
+      bodyMedium: TextStyle(color: Colors.black), // نص ثانوي
       titleLarge: TextStyle(
         color: Color(0xFF145A32),
         fontWeight: FontWeight.bold,
-        fontSize: 20,
+        fontSize: 32,
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFD4AF37), // زر بالذهبي
+        backgroundColor: const Color(0xFF145A32), 
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -42,6 +48,8 @@ class AppThemes {
 
   /// Dark Theme
   static final ThemeData darkTheme = ThemeData(
+    fontFamily: 'Amiri',
+
     brightness: Brightness.dark,
     primaryColor: const Color(0xFF145A32),
     scaffoldBackgroundColor: const Color(0xFF212121), // خلفية داكنة
@@ -54,6 +62,7 @@ class AppThemes {
       onSurface: Colors.white,
     ),
     appBarTheme: const AppBarTheme(
+      iconTheme: IconThemeData(size: 32, color: Colors.white),
       backgroundColor: Color(0xFF145A32),
       foregroundColor: Colors.white,
       elevation: 0,
