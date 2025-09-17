@@ -1,6 +1,4 @@
-import 'package:al_rafiq/feature/home/presentation/views/widgets/custom_list_view_time_pray.dart';
-import 'package:al_rafiq/feature/home/presentation/views/widgets/next_pray_widget.dart';
-import 'package:al_rafiq/feature/home/presentation/views/widgets/prayer_time_update_widget.dart';
+import 'package:al_rafiq/feature/home/presentation/views/widgets/custom_list_view_sections.dart';
 import 'package:al_rafiq/feature/home/presentation/views/widgets/time_pray_section.dart';
 import 'package:flutter/material.dart';
 
@@ -15,18 +13,60 @@ class HomeViewBody extends StatelessWidget {
         title: Text('الرفيق'),
         leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
       ),
-      body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: TimePraySection(),
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+              TimePraySection(),
+              SizedBox(height: 15),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'الاقسام',
+                  textAlign: TextAlign.start,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(fontSize: 24),
+                ),
+              ),
+              SizedBox(height: 15),
+              CustomListViewSections(),
+            ],
           ),
-          SliverFillRemaining(),
-        ],
+        ),
       ),
     );
   }
 }
+// CustomScrollView(
+//         physics: BouncingScrollPhysics(),
+//         slivers: [
+//           SliverToBoxAdapter(
+//             child: Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 8),
+//               child: TimePraySection(),
+//             ),
+//           ),
+//           SliverFillRemaining(
+//             child: Padding(
+//               padding: const EdgeInsets.symmetric(horizontal: 8),
+//               child: Column(
+//                 children: [
+//                   SizedBox(height: 15),
+//                   Text(
+//                     'الاقسام ',
+//                     textAlign: TextAlign.right,
+//                     style: Theme.of(
+//                       context,
+//                     ).textTheme.bodyMedium?.copyWith(fontSize: 24),
+//                   ),
+//                   SizedBox(height: 15),
+//                   CustomListViewSections(),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
