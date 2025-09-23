@@ -1,8 +1,21 @@
 import 'package:al_rafiq/feature/home/presentation/views/widgets/item_section.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomListViewSections extends StatelessWidget {
   CustomListViewSections({super.key});
+  final List<Map<String, String>> sections = [
+    {"text": "الأذكار", "route": "/azkarview"},
+    {"text": "الأذكار الخاصة", "route": "/userAzkarView"},
+    {"text": "القرآن الكريم", "route": "/quranview"},
+    {"text": "أسماء الله الحسنى", "route": "/namesview"},
+    {"text": "سيرة النبي ﷺ", "route": "/prophetView"},
+    {"text": "الأربعين النووية", "route": "/prophetView"},
+    {"text": "سير الصحابة", "route": "/sahabaView"},
+    {"text": "سير الصحابيات", "route": "/sahabiyatView"},
+    {"text": "قصص الأنبياء", "route": "/anbiaView"},
+    {"text": "الأدعية", "route": "/duaview"},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +30,14 @@ class CustomListViewSections extends StatelessWidget {
       ),
       itemCount: sections.length,
       itemBuilder: (context, index) {
-        return ItemSection(text: sections[index]);
+        final section = sections[index];
+        return ItemSection(
+          text: section["text"]!,
+          onTap: () {
+            GoRouter.of(context).push(section["route"]!);
+          },
+        );
       },
     );
   }
-
-  final List<String> sections = [
-    "أسماء الله الحسنى",
-    "الأذكار",
-    "الأدعية",
-    "القرآن الكريم",
-    "السيرة",
-    "التفسير",
-    "الحديث",
-    "الفقه",
-    "التجويد",
-    "القصص",
-  ];
 }
