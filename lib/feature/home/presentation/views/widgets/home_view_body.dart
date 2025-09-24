@@ -1,3 +1,5 @@
+import 'package:al_rafiq/feature/home/presentation/views/widgets/ayat_muhkamat_widget.dart';
+import 'package:al_rafiq/feature/home/presentation/views/widgets/azkar_widget.dart';
 import 'package:al_rafiq/feature/home/presentation/views/widgets/custom_list_view_sections.dart';
 import 'package:al_rafiq/feature/home/presentation/views/widgets/time_pray_section.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,10 @@ class HomeViewBody extends StatelessWidget {
               ),
               SizedBox(height: 15),
               CustomListViewSections(),
+              SizedBox(height: 10),
+              AyatMuhkamatWidget(),
+              SizedBox(height: 10),
+              AzkarWidget(),
             ],
           ),
         ),
@@ -40,33 +46,3 @@ class HomeViewBody extends StatelessWidget {
     );
   }
 }
-// CustomScrollView(
-//         physics: BouncingScrollPhysics(),
-//         slivers: [
-//           SliverToBoxAdapter(
-//             child: Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 8),
-//               child: TimePraySection(),
-//             ),
-//           ),
-//           SliverFillRemaining(
-//             child: Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 8),
-//               child: Column(
-//                 children: [
-//                   SizedBox(height: 15),
-//                   Text(
-//                     'الاقسام ',
-//                     textAlign: TextAlign.right,
-//                     style: Theme.of(
-//                       context,
-//                     ).textTheme.bodyMedium?.copyWith(fontSize: 24),
-//                   ),
-//                   SizedBox(height: 15),
-//                   CustomListViewSections(),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),

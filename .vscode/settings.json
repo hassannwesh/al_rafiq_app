@@ -1,5 +1,6 @@
 {
     "yaml.schemas": {
         "https://www.schemastore.org/pubspec.json": "file:///c%3A/flutter_project/al_rafiq/pubspec.yaml"
-    }
+    },
+    "cmake.sourceDirectory": "C:/flutter_project/al_rafiq/linux"
 }
