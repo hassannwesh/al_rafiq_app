@@ -5,32 +5,55 @@ class CustomTimePrayItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 90,
-      width: 90,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Text(
-              'الفجر',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontSize: 28),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double availableHeight = constraints.maxHeight.isFinite
+            ? constraints.maxHeight
+            : MediaQuery.of(context).size.height * 0.1;
+
+        const double basePadding = 8.0;
+        final double innerHeight = (availableHeight - basePadding * 2).clamp(
+          24,
+          200,
+        );
+
+        final double titleFontSize = innerHeight * 0.5; // max 28 later
+        final double timeFontSize = innerHeight * 0.32; // max 18 later
+
+        final textTheme = Theme.of(context).textTheme;
+
+        return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(basePadding),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'الفجر',
+                  textAlign: TextAlign.center,
+                  style: textTheme.bodyLarge?.copyWith(
+                    fontSize: titleFontSize.clamp(16, 28).toDouble(),
+                  ),
+                ),
+                SizedBox(height: innerHeight * 0.06),
+                Text(
+                  '5:10 Am',
+                  textAlign: TextAlign.center,
+                  style: textTheme.bodyLarge?.copyWith(
+                    fontSize: timeFontSize.clamp(12, 18).toDouble(),
+                  ),
+                ),
+              ],
             ),
-            Text(
-              '5:10 Am',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontSize: 18),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

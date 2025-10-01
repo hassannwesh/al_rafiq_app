@@ -1,5 +1,5 @@
 import 'package:al_rafiq/feature/home/presentation/views/widgets/ayat_muhkamat_widget.dart';
-import 'package:al_rafiq/feature/home/presentation/views/widgets/azkar_widget.dart';
+import 'package:al_rafiq/feature/home/presentation/views/widgets/tasbeeh_widget.dart';
 import 'package:al_rafiq/feature/home/presentation/views/widgets/custom_list_view_sections.dart';
 import 'package:al_rafiq/feature/home/presentation/views/widgets/time_pray_section.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class HomeViewBody extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('الرفيق'),
+        title: Text('الرفيق', style: TextStyle(fontSize: 28)),
         leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
       ),
       body: SingleChildScrollView(
@@ -38,7 +38,7 @@ class HomeViewBody extends StatelessWidget {
               SizedBox(height: 10),
               AyatMuhkamatWidget(),
               SizedBox(height: 10),
-              AzkarWidget(),
+              TasbeehWidget(),
             ],
           ),
         ),

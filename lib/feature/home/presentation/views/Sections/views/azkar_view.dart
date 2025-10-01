@@ -1,3 +1,4 @@
+import 'package:al_rafiq/feature/home/presentation/views/Sections/views/widgets/azkar_view_body.dart';
 import 'package:flutter/material.dart';
 
 class AzkarView extends StatelessWidget {
@@ -5,6 +6,12 @@ class AzkarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('الاذكار ', style: TextStyle(fontSize: 28)),
+      ),
+      body: AzkarViewBody(),
+    );
   }
 }

@@ -7,8 +7,12 @@ class CustomListViewTimePray extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double listHeight = ScreenSize.height(context) * .11;
+    final double itemWidth =
+        MediaQuery.of(context).size.width * 0.22; // حوالي 22% من العرض
+
     return SizedBox(
-      height: ScreenSize.height(context) * .1,
+      height: listHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),
@@ -16,7 +20,13 @@ class CustomListViewTimePray extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
-            child: CustomTimePrayItem(),
+            child: SizedBox(
+              width: itemWidth.clamp(
+                90.0,
+                140.0,
+              ), // يحافظ على اتساق العنصر عبر الأجهزة
+              child: CustomTimePrayItem(),
+            ),
           );
         },
       ),

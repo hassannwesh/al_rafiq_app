@@ -9,20 +9,17 @@ class ScreenSize {
       MediaQuery.of(context).size.width;
 }
 
-/// Azkar Widget متوافق مع تطبيق الرفيق
-/// مصمم ليتناسب مع الألوان الخضراء والتصميم الإسلامي
-class AzkarWidget extends StatefulWidget {
+class TasbeehWidget extends StatefulWidget {
   final double? customHeight;
   final double? customWidth;
 
-  const AzkarWidget({Key? key, this.customHeight, this.customWidth})
+  const TasbeehWidget({Key? key, this.customHeight, this.customWidth})
     : super(key: key);
-
   @override
-  State<AzkarWidget> createState() => _AzkarWidgetState();
+  State<TasbeehWidget> createState() => _TasbeehWidgetState();
 }
 
-class _AzkarWidgetState extends State<AzkarWidget>
+class _TasbeehWidgetState extends State<TasbeehWidget>
     with TickerProviderStateMixin {
   // قائمة الأذكار - يمكن تخصيصها بسهولة
   final List<String> azkar = [
@@ -392,7 +389,7 @@ class RafiqCircularProgressPainter extends CustomPainter {
 
     // ألوان التقدم متدرجة خضراء
     final progressColors = [
-      const Color(0xFFB68F2E), // أخضر داكن جداً للذكر الخامس🎯🎯🎯
+      const Color(0xFFB68F2E), //🎯🎯🎯
     ];
 
     final progressPaint = Paint()
