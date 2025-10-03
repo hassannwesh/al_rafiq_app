@@ -9,7 +9,7 @@ class AzkarView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('الاذكار ', style: TextStyle(fontSize: 28)),
+        title: Text('الأذكار ', style: TextStyle(fontSize: 28)),
       ),
       body: AzkarViewBody(),
     );

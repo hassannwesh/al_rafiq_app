@@ -2,8 +2,10 @@ import 'package:al_rafiq/core/utils/helper/class_size.dart';
 import 'package:flutter/material.dart';
 
 class ZkarItem extends StatelessWidget {
-  const ZkarItem({super.key});
+  const ZkarItem({super.key, required this.text, required this.onTap});
 
+  final String text;
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +15,7 @@ class ZkarItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Container(
           height: ScreenSize.height(context) * .13,
@@ -30,7 +32,7 @@ class ZkarItem extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              'أذكار الصباح',
+              text,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 fontSize: 26,
