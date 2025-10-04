@@ -1,4 +1,3 @@
-import 'package:al_rafiq/core/utils/helper/class_size.dart';
 import 'package:flutter/material.dart';
 
 class ZkarCard extends StatelessWidget {
@@ -7,60 +6,84 @@ class ZkarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenSize.height(context) * .30,
       decoration: BoxDecoration(
-        color: Colors.grey[400],
+        color: Colors.grey[300],
         borderRadius: BorderRadius.circular(16),
       ),
       child: InkWell(
-        onTap: () {},
         borderRadius: BorderRadius.circular(16),
-        child: Container(
-          height: ScreenSize.height(context) * .13,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            child: Column(
-              children: [
-                Text(
-                  '1',
-                  textAlign: TextAlign.center,
+        onTap: () {},
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                height: 28,
+                width: 28,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: Text(
+                  '99',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 16,
-                    color: Colors.black, // النص يبان بوضوح
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 5),
-                Text(
-                  ' اللّهُـمَّ ما أَصْبَـَحَ بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر. ',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 18,
-                    color: Colors.black, // النص يبان بوضوح
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'اللّهُـمَّ ما أَصْبَـَحَ بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontSize: 18,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
-                Spacer(),
-                Row(
-                  children: [
-                    Text(
-                      'التكرار  5 مرات ',
-                      textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: 30,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    child: Text(
+                      'التكرار  555 مرات ',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,
-                        color: Colors.black, // النص يبان بوضوح
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Spacer(),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.menu_book)),
-                    SizedBox(width: 10),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.refresh)),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.menu_book,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.refresh,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
