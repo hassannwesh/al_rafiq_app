@@ -1,5 +1,4 @@
 import 'package:al_rafiq/feature/home/presentation/views/Sections/views/azkar_view.dart';
-import 'package:al_rafiq/feature/home/presentation/views/Sections/views/evening_azkar_view.dart';
 import 'package:al_rafiq/feature/home/presentation/views/Sections/views/azkar_details_view.dart';
 import 'package:al_rafiq/feature/home/presentation/views/home_view.dart';
 import 'package:al_rafiq/feature/splash/presentation/views/widgets/splash_view.dart';
@@ -38,12 +37,7 @@ abstract class AppRouter {
           return const AzkarDetailsView();
         },
       ),
-      GoRoute(
-        path: kEveningAzkar,
-        builder: (context, GoRouterState state) {
-          return const EveningAzkarView();
-        },
-      ),
+    
     ],
   );
 }

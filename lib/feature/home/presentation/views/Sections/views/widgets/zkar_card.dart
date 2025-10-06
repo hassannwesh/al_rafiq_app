@@ -1,8 +1,18 @@
+import 'package:al_rafiq/feature/home/presentation/views/Sections/views/widgets/zkar_explanation_dialog.dart';
 import 'package:flutter/material.dart';
 
 class ZkarCard extends StatelessWidget {
-  const ZkarCard({super.key});
-
+  const ZkarCard({
+    super.key,
+    required this.zkarText,
+    required this.explanationZkar,
+    required this.zkarNum,
+    required this.numOfRepetitions,
+  });
+  final String zkarText;
+  final String explanationZkar;
+  final String zkarNum;
+  final String numOfRepetitions;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,30 +24,43 @@ class ZkarCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: () {},
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                alignment: Alignment.center,
-                height: 28,
-                width: 28,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).primaryColor,
-                ),
-                child: Text(
-                  '99',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              Row(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: 28,
+                    width: 28,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Theme.of(context).primaryColor,
+                    ),
+
+                    child: Text(
+                      zkarNum,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                  Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.volume_up,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
               Text(
-                'اللّهُـمَّ ما أَصْبَـَحَ بي مِـنْ نِعْـمَةٍ أَو بِأَحَـدٍ مِـنْ خَلْـقِك ، فَمِـنْكَ وَحْـدَكَ لا شريكَ لَـك ، فَلَـكَ الْحَمْـدُ وَلَـكَ الشُّكْـر.',
+                zkarText,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 18,
@@ -57,7 +80,7 @@ class ZkarCard extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                     child: Text(
-                      'التكرار  555 مرات ',
+                      'التكرار${numOfRepetitions}مرات ',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,
                         color: Colors.white,
@@ -69,15 +92,23 @@ class ZkarCard extends StatelessWidget {
                   IconButton(
                     onPressed: () {},
                     icon: Icon(
-                      Icons.menu_book,
+                      Icons.refresh,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
+
                   const SizedBox(width: 10),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ZkarExplanationDialog(
+                          explanationZkar: explanationZkar,
+                        ),
+                      );
+                    },
                     icon: Icon(
-                      Icons.refresh,
+                      Icons.menu_book,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),

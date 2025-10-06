@@ -11,7 +11,14 @@ class AzkarDetailsViewBody extends StatelessWidget {
       itemBuilder: (context, index) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          child: SizedBox(child: ZkarCard()),
+          child: SizedBox(
+            child: ZkarCard(
+              zkarText: '',
+              explanationZkar: '',
+              zkarNum: '55',
+              numOfRepetitions: '999',
+            ),
+          ),
         );
       },
     );
