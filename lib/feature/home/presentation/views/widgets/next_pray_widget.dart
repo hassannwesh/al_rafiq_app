@@ -20,13 +20,13 @@ class NextPrayWidget extends StatelessWidget {
             'الصلاة القادمة : الفجر ',
             style: Theme.of(
               context,
-            ).textTheme.bodyLarge?.copyWith(fontSize: 30),
+            ).textTheme.bodyLarge?.copyWith(fontSize: 30, color: Colors.white),
           ),
           Text(
             'الوقت المتبقي: 3:5:25',
             style: Theme.of(
               context,
-            ).textTheme.bodyLarge?.copyWith(fontSize: 22),
+            ).textTheme.bodyLarge?.copyWith(fontSize: 22, color: Colors.white),
           ),
         ],
       ),

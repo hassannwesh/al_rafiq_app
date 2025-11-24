@@ -39,6 +39,7 @@ class CustomTimePrayItem extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: textTheme.bodyLarge?.copyWith(
                     fontSize: titleFontSize.clamp(16, 28).toDouble(),
+                    color: Colors.white,
                   ),
                 ),
                 SizedBox(height: innerHeight * 0.06),
@@ -47,6 +48,7 @@ class CustomTimePrayItem extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: textTheme.bodyLarge?.copyWith(
                     fontSize: timeFontSize.clamp(12, 18).toDouble(),
+                    color: Colors.white,
                   ),
                 ),
               ],

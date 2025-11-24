@@ -1,6 +1,7 @@
 import 'package:al_rafiq/feature/home/presentation/views/Sections/views/azkar_view.dart';
 import 'package:al_rafiq/feature/home/presentation/views/Sections/views/azkar_details_view.dart';
 import 'package:al_rafiq/feature/home/presentation/views/home_view.dart';
+import 'package:al_rafiq/feature/settings/presentation/views/settings_view.dart';
 import 'package:al_rafiq/feature/splash/presentation/views/widgets/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,9 +11,14 @@ abstract class AppRouter {
   static const String kAzkarView = '/azkarview';
   static const String kAzkarDetails = '/azkardetails';
   static const String kEveningAzkar = '/eveningAzkar';
+  static const String kSettingsView = '/settingsView';
   String get initialRoute;
   static final GoRouter router = GoRouter(
     routes: <RouteBase>[
+      GoRoute(
+        path: kSettingsView,
+        builder: (context, state) => const SettingsView(),
+      ),
       GoRoute(
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
@@ -37,7 +43,6 @@ abstract class AppRouter {
           return const AzkarDetailsView();
         },
       ),
-    
     ],
   );
 }

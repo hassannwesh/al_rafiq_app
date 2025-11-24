@@ -9,38 +9,31 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('الرفيق', style: TextStyle(fontSize: 28)),
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              TimePraySection(),
-              SizedBox(height: 15),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'الاقسام',
-                  textAlign: TextAlign.start,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(fontSize: 24),
-                ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            TimePraySection(),
+            SizedBox(height: 15),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                'الاقسام',
+                textAlign: TextAlign.start,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(fontSize: 24),
               ),
-              SizedBox(height: 15),
-              CustomListViewSections(),
-              SizedBox(height: 10),
-              AyatMuhkamatWidget(),
-              SizedBox(height: 10),
-              TasbeehWidget(),
-            ],
-          ),
+            ),
+            SizedBox(height: 15),
+            CustomListViewSections(),
+            SizedBox(height: 10),
+            AyatMuhkamatWidget(),
+            SizedBox(height: 10),
+            TasbeehWidget(),
+          ],
         ),
       ),
     );
