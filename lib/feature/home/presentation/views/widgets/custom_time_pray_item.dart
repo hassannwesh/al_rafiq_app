@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomTimePrayItem extends StatelessWidget {
-  const CustomTimePrayItem({super.key});
+  const CustomTimePrayItem({
+    super.key,
+    required this.prayerName,
+    required this.prayerTime,
+    this.isNextPrayer = false,
+  });
+
+  final String prayerName;
+  final String prayerTime;
+  final bool isNextPrayer;
 
   @override
   Widget build(BuildContext context) {
@@ -21,37 +30,50 @@ class CustomTimePrayItem extends StatelessWidget {
         final double timeFontSize = innerHeight * 0.32; // max 18 later
 
         final textTheme = Theme.of(context).textTheme;
+        final primaryColor = Theme.of(context).colorScheme.primary;
 
         return Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
+            color: isNextPrayer ? primaryColor : primaryColor.withOpacity(0.8),
             borderRadius: BorderRadius.circular(12),
+            border: isNextPrayer
+                ? Border.all(color: Colors.white, width: 2)
+                : null,
           ),
           child: Padding(
             padding: const EdgeInsets.all(basePadding),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'الفجر',
-                  textAlign: TextAlign.center,
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontSize: titleFontSize.clamp(16, 28).toDouble(),
-                    color: Colors.white,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    prayerName,
+                    textAlign: TextAlign.center,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontSize: titleFontSize.clamp(16, 28).toDouble(),
+                      color: Colors.white,
+                      fontWeight: isNextPrayer
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
                   ),
-                ),
-                SizedBox(height: innerHeight * 0.06),
-                Text(
-                  '5:10 Am',
-                  textAlign: TextAlign.center,
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontSize: timeFontSize.clamp(12, 18).toDouble(),
-                    color: Colors.white,
+                  SizedBox(height: innerHeight * 0.06),
+                  Text(
+                    prayerTime,
+                    textAlign: TextAlign.center,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontSize: timeFontSize.clamp(12, 18).toDouble(),
+                      color: Colors.white,
+                      fontWeight: isNextPrayer
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

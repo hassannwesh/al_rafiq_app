@@ -1,3 +1,4 @@
+import 'package:al_rafiq/core/manager/prayer_time_cubit/prayer_time_cubit.dart';
 import 'package:al_rafiq/core/manager/theme_cubit/theme_cubit.dart';
 import 'package:al_rafiq/core/manager/theme_cubit/theme_state.dart';
 import 'package:al_rafiq/core/utils/app_router.dart';
@@ -15,8 +16,11 @@ class AlRafiq extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ThemeCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ThemeCubit()),
+        BlocProvider(create: (context) => PrayerTimeCubit()),
+      ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return MaterialApp.router(
