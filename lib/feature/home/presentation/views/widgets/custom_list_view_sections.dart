@@ -6,7 +6,6 @@ class CustomListViewSections extends StatelessWidget {
   CustomListViewSections({super.key});
   final List<Map<String, String>> sections = [
     {"text": "الأذكار", "route": "/azkarview"},
-    {"text": "الأذكار الخاصة", "route": "/userAzkarView"},
     {"text": "القرآن الكريم", "route": "/quranview"},
     {"text": "أسماء الله الحسنى", "route": "/namesview"},
     {"text": "سيرة النبي ﷺ", "route": "/prophetView"},
@@ -14,7 +13,7 @@ class CustomListViewSections extends StatelessWidget {
     {"text": "سير الصحابة", "route": "/sahabaView"},
     {"text": "سير الصحابيات", "route": "/sahabiyatView"},
     {"text": "قصص الأنبياء", "route": "/anbiaView"},
-    {"text": "الأدعية", "route": "/duaview"},
+   
   ];
 
   @override
