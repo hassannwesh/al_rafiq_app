@@ -1,4 +1,5 @@
 import 'package:al_rafiq/feature/home/presentation/views/Sections/views/widgets/zkar_item.dart';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,49 +8,57 @@ class CustomListViewAzkar extends StatelessWidget {
   final List<Map<String, dynamic>> azkarList = [
     {
       "text": "أذكار الصباح",
-      "route": "/azkardetails",
+      "filename": "morning_azkar",
       "icon": Icons.wb_sunny_rounded,
     },
     {
       "text": "أذكار المساء",
-      "route": "/eveningAzkar",
+      "filename": "evening_azkar",
       "icon": Icons.nights_stay_rounded,
     },
-    {"text": "أذكار النوم", "route": "/sleepAzkar", "icon": Icons.bed_rounded},
+    {
+      "text": "أذكار النوم",
+      "filename": "sleep_azkar",
+      "icon": Icons.bed_rounded,
+    },
     {
       "text": "أذكار المسجد",
-      "route": "/mosqueAzkar",
+      "filename": "mosque_azkar",
       "icon": Icons.mosque_rounded,
     },
     {
       "text": "أذكار الوضوء",
-      "route": "/wuduAzkar",
+      "filename": "wudu_azkar",
       "icon": Icons.water_drop_rounded,
     },
     {
       "text": "أذكار الطعام",
-      "route": "/foodAzkar",
+      "filename": "food_azkar",
       "icon": Icons.restaurant_rounded,
     },
     {
       "text": "أذكار الاستيقاظ",
-      "route": "/wakeupAzkar",
+      "filename": "wakeup_azkar",
       "icon": Icons.alarm_rounded,
     },
-    {"text": "أذكار المنزل", "route": "/homeAzkar", "icon": Icons.home_rounded},
+    {
+      "text": "أذكار المنزل",
+      "filename": "home_azkar",
+      "icon": Icons.home_rounded,
+    },
     {
       "text": "أذكار بعد الصلاة",
-      "route": "/afterPrayerAzkar",
+      "filename": "after_prayer_azkar",
       "icon": Icons.front_hand_rounded,
     },
     {
       "text": "أذكار الأذان",
-      "route": "/adhanAzkar",
+      "filename": "adhan_azkar",
       "icon": Icons.volume_up_rounded,
     },
     {
       "text": "أذكار الحج والعمرة",
-      "route": "/hajjUmrahAzkar",
+      "filename": "hajj_umrah_azkar",
       "icon": Icons.airplanemode_active_rounded,
     },
   ];
@@ -65,7 +74,10 @@ class CustomListViewAzkar extends StatelessWidget {
           text: azkar["text"] as String,
           icon: azkar["icon"] as IconData,
           onTap: () {
-            GoRouter.of(context).push(azkar["route"] as String);
+            GoRouter.of(context).push(
+              '/azkardetails',
+              extra: {'title': azkar["text"], 'category': azkar["filename"]},
+            );
           },
         );
       },

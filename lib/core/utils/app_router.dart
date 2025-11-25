@@ -40,7 +40,11 @@ abstract class AppRouter {
       GoRoute(
         path: kAzkarDetails,
         builder: (context, GoRouterState state) {
-          return const AzkarDetailsView();
+          final extra = state.extra as Map<String, dynamic>;
+          return AzkarDetailsView(
+            title: extra['title'] as String,
+            category: extra['category'] as String,
+          );
         },
       ),
     ],
