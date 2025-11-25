@@ -1,7 +1,8 @@
+import 'dart:ui';
 import 'package:al_rafiq/feature/home/presentation/views/Sections/views/widgets/zkar_explanation_dialog.dart';
 import 'package:flutter/material.dart';
 
-class ZkarCard extends StatelessWidget {
+class ZkarCard extends StatefulWidget {
   const ZkarCard({
     super.key,
     required this.zkarText,
@@ -9,115 +10,274 @@ class ZkarCard extends StatelessWidget {
     required this.zkarNum,
     required this.numOfRepetitions,
   });
+
   final String zkarText;
   final String explanationZkar;
   final String zkarNum;
   final String numOfRepetitions;
+
+  @override
+  State<ZkarCard> createState() => _ZkarCardState();
+}
+
+class _ZkarCardState extends State<ZkarCard> with TickerProviderStateMixin {
+  late int currentCount;
+  late int totalCount;
+  late AnimationController _progressController;
+  late Animation<double> _progressAnimation;
+  late AnimationController _scaleController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    totalCount = int.tryParse(widget.numOfRepetitions) ?? 1;
+    currentCount = totalCount;
+
+    _progressController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _progressAnimation = Tween<double>(
+      begin: 0,
+      end: 0,
+    ).animate(_progressController);
+
+    _scaleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
+      CurvedAnimation(parent: _scaleController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant ZkarCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.numOfRepetitions != widget.numOfRepetitions) {
+      setState(() {
+        totalCount = int.tryParse(widget.numOfRepetitions) ?? 1;
+        currentCount = totalCount;
+        _updateProgress();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _progressController.dispose();
+    _scaleController.dispose();
+    super.dispose();
+  }
+
+  void _handleTap() {
+    if (currentCount > 0) {
+      _scaleController.forward().then((_) => _scaleController.reverse());
+      setState(() {
+        currentCount--;
+        _updateProgress();
+      });
+    }
+  }
+
+  void _reset() {
+    setState(() {
+      currentCount = totalCount;
+      _updateProgress();
+    });
+  }
+
+  void _updateProgress() {
+    double progress = (totalCount - currentCount) / totalCount;
+    _progressAnimation =
+        Tween<double>(begin: _progressAnimation.value, end: progress).animate(
+          CurvedAnimation(parent: _progressController, curve: Curves.easeOut),
+        );
+    _progressController.forward(from: 0);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: () {},
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: 28,
-                    width: 28,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(context).primaryColor,
-                    ),
-
-                    child: Text(
-                      zkarNum,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.volume_up,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
+    return AnimatedBuilder(
+      animation: Listenable.merge([_progressController, _scaleController]),
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _scaleAnimation.value,
+          child: CustomPaint(
+            painter: ProgressBorderPainter(
+              progress: _progressAnimation.value,
+              color: Theme.of(context).primaryColor,
+              width: 4.0,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: currentCount == 0
+                    ? Colors.grey[200]!.withOpacity(0.5)
+                    : Colors.grey[200],
+                borderRadius: BorderRadius.circular(16),
               ),
-              const SizedBox(height: 10),
-              Text(
-                zkarText,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(16),
+                onTap: _handleTap,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            height: 32,
+                            width: 32,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            child: Text(
+                              widget.zkarNum,
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {}, // TODO: Implement share or audio
+                            icon: Icon(
+                              Icons.volume_up_rounded,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        widget.zkarText,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 20,
+                          color: currentCount == 0
+                              ? Colors.grey
+                              : Colors.black87,
+                          fontWeight: FontWeight.bold,
+                          height: 1.5,
+                          fontFamily: 'Amiri',
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            child: Text(
+                              currentCount == 0
+                                  ? 'اكتمل'
+                                  : 'التكرار: $currentCount',
+                              style: Theme.of(context).textTheme.bodyLarge
+                                  ?.copyWith(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: _reset,
+                            icon: Icon(
+                              Icons.refresh_rounded,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => ZkarExplanationDialog(
+                                  explanationZkar: widget.explanationZkar,
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.info_outline_rounded,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: 30,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    child: Text(
-                      'التكرار${numOfRepetitions}مرات ',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.refresh,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-
-                  const SizedBox(width: 10),
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ZkarExplanationDialog(
-                          explanationZkar: explanationZkar,
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.menu_book,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+}
+
+class ProgressBorderPainter extends CustomPainter {
+  final double progress;
+  final Color color;
+  final double width;
+
+  ProgressBorderPainter({
+    required this.progress,
+    required this.color,
+    required this.width,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (progress == 0) return;
+
+    final Paint paint = Paint()
+      ..color = color
+      ..strokeWidth = width
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    final RRect rRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      const Radius.circular(16),
+    );
+
+    final Path path = Path()..addRRect(rRect);
+
+    // Calculate total length of the path
+    final PathMetric pathMetric = path.computeMetrics().first;
+    final double totalLength = pathMetric.length;
+
+    // Calculate length to draw based on progress
+    final double drawLength = totalLength * progress;
+
+    // Extract the sub-path to draw
+    final Path drawPath = pathMetric.extractPath(0, drawLength);
+
+    canvas.drawPath(drawPath, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant ProgressBorderPainter oldDelegate) {
+    return oldDelegate.progress != progress ||
+        oldDelegate.color != color ||
+        oldDelegate.width != width;
   }
 }
