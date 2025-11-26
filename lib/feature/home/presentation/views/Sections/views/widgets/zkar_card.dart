@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:al_rafiq/feature/home/presentation/views/Sections/views/widgets/painters/progress_border_painter.dart';
 import 'package:al_rafiq/feature/home/presentation/views/Sections/views/widgets/zkar_explanation_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +10,16 @@ class ZkarCard extends StatefulWidget {
     required this.explanationZkar,
     required this.zkarNum,
     required this.numOfRepetitions,
+    this.onEdit,
+    this.onDelete,
   });
 
   final String zkarText;
   final String explanationZkar;
   final String zkarNum;
   final String numOfRepetitions;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
   @override
   State<ZkarCard> createState() => _ZkarCardState();
@@ -128,99 +133,11 @@ class _ZkarCardState extends State<ZkarCard> with TickerProviderStateMixin {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            height: 32,
-                            width: 32,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            child: Text(
-                              widget.zkarNum,
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () {}, // TODO: Implement share or audio
-                            icon: Icon(
-                              Icons.volume_up_rounded,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
+                      _buildHeader(context),
                       const SizedBox(height: 16),
-                      Text(
-                        widget.zkarText,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 20,
-                          color: currentCount == 0
-                              ? Colors.grey
-                              : Colors.black87,
-                          fontWeight: FontWeight.bold,
-                          height: 1.5,
-                          fontFamily: 'Amiri',
-                        ),
-                      ),
+                      _buildContent(context),
                       const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            child: Text(
-                              currentCount == 0
-                                  ? 'اكتمل'
-                                  : 'التكرار: $currentCount',
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: _reset,
-                            icon: Icon(
-                              Icons.refresh_rounded,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          IconButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => ZkarExplanationDialog(
-                                  explanationZkar: widget.explanationZkar,
-                                ),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.info_outline_rounded,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
+                      _buildFooter(context),
                     ],
                   ),
                 ),
@@ -231,53 +148,130 @@ class _ZkarCardState extends State<ZkarCard> with TickerProviderStateMixin {
       },
     );
   }
-}
 
-class ProgressBorderPainter extends CustomPainter {
-  final double progress;
-  final Color color;
-  final double width;
-
-  ProgressBorderPainter({
-    required this.progress,
-    required this.color,
-    required this.width,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (progress == 0) return;
-
-    final Paint paint = Paint()
-      ..color = color
-      ..strokeWidth = width
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-
-    final RRect rRect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(0, 0, size.width, size.height),
-      const Radius.circular(16),
+  Widget _buildHeader(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: 32,
+          width: 32,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Theme.of(context).primaryColor,
+          ),
+          child: Text(
+            widget.zkarNum,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const Spacer(),
+        IconButton(
+          onPressed: () {}, // TODO: Implement share or audio
+          icon: Icon(
+            Icons.volume_up_rounded,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        PopupMenuButton<String>(
+          icon: Icon(
+            Icons.more_vert_rounded,
+            color: Theme.of(context).primaryColor,
+          ),
+          onSelected: (value) {
+            if (value == 'edit') {
+              widget.onEdit?.call();
+            } else if (value == 'delete') {
+              widget.onDelete?.call();
+            }
+          },
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+            const PopupMenuItem<String>(
+              value: 'edit',
+              child: Row(
+                children: [
+                  Icon(Icons.edit, size: 20),
+                  SizedBox(width: 8),
+                  Text('تعديل'),
+                ],
+              ),
+            ),
+            const PopupMenuItem<String>(
+              value: 'delete',
+              child: Row(
+                children: [
+                  Icon(Icons.delete, color: Colors.red, size: 20),
+                  SizedBox(width: 8),
+                  Text('حذف', style: TextStyle(color: Colors.red)),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
-
-    final Path path = Path()..addRRect(rRect);
-
-    // Calculate total length of the path
-    final PathMetric pathMetric = path.computeMetrics().first;
-    final double totalLength = pathMetric.length;
-
-    // Calculate length to draw based on progress
-    final double drawLength = totalLength * progress;
-
-    // Extract the sub-path to draw
-    final Path drawPath = pathMetric.extractPath(0, drawLength);
-
-    canvas.drawPath(drawPath, paint);
   }
 
-  @override
-  bool shouldRepaint(covariant ProgressBorderPainter oldDelegate) {
-    return oldDelegate.progress != progress ||
-        oldDelegate.color != color ||
-        oldDelegate.width != width;
+  Widget _buildContent(BuildContext context) {
+    return Text(
+      widget.zkarText,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: 20,
+        color: currentCount == 0 ? Colors.grey : Colors.black87,
+        fontWeight: FontWeight.bold,
+        height: 1.5,
+        fontFamily: 'Amiri',
+      ),
+    );
+  }
+
+  Widget _buildFooter(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Theme.of(context).primaryColor,
+          ),
+          child: Text(
+            currentCount == 0 ? 'اكتمل' : 'التكرار: $currentCount',
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const Spacer(),
+        IconButton(
+          onPressed: _reset,
+          icon: Icon(
+            Icons.refresh_rounded,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => ZkarExplanationDialog(
+                explanationZkar: widget.explanationZkar,
+              ),
+            );
+          },
+          icon: Icon(
+            Icons.info_outline_rounded,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ],
+    );
   }
 }
